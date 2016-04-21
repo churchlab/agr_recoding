@@ -116,7 +116,7 @@ def _get_expression_comparison_data(feature, orig_seq, recoded_seq):
         ratio = INFINITY
     else:
         # Calculate positive ratio.
-        delta_expression = expression_original / expression_recoded
+        delta_expression = expression_recoded / expression_original
         if delta_expression >= 1:
             ratio = delta_expression
         else:
@@ -603,14 +603,14 @@ def generate_alternate_codon_choice_comparison_rbs_of_downstream(
                 # Compute RBS score.
                 expression_compare_data = _get_expression_comparison_data(
                         next_f, seq_record.seq, mod_seq_record.seq)
-                data_obj['RBS_' + codon] = float("{0:.2f}".format(
-                        expression_compare_data['positive_ratio']))
+                data_obj['RBS_' + codon] = float("{0:.4f}".format(
+                        expression_compare_data['delta_expression']))
 
                 # Compute mRNA free energy change.
                 ss_score = ss_scorer.score_at_codon_start_index(
                         next_f.location.start, seq_record.seq,
-                        mod_seq_record.seq, next_f)
-                data_obj['mRNA_' + codon] = float("{0:.2f}".format(ss_score))
+                        mod_seq_record.seq, next_f, raw_ratio=True)
+                data_obj['mRNA_' + codon] = float("{0:.4f}".format(ss_score))
 
         except TypeError:
             # Happens, for example, at frlC/frlD junction where changing AGR
@@ -643,20 +643,6 @@ def generate_alternate_codon_choice_comparison_rbs_of_downstream(
         last_AGR_global_pos = (f.location.start + (
                 len(f) - last_AGR_in_upstream_feature))
 
-        # DEBUG
-        # print get_feature_gene_name(f)
-        # print last_AGR_in_upstream_feature
-        # print reverse_complement(
-        #         seq_record.seq[last_AGR_global_pos - 9:last_AGR_global_pos - 3].lower() +
-        #         seq_record.seq[last_AGR_global_pos - 3:last_AGR_global_pos] +
-        #         seq_record.seq[last_AGR_global_pos:last_AGR_global_pos + 6].lower()
-        # )
-
-        # gene = get_feature_gene_name(f)
-        # print gene
-        # if gene != 'dcuS':
-        #     continue
-
         wt_codon = str(reverse_complement(
                 seq_record.seq[last_AGR_global_pos - 3:last_AGR_global_pos]))
         assert wt_codon in AGR_CODONS
@@ -678,14 +664,14 @@ def generate_alternate_codon_choice_comparison_rbs_of_downstream(
             # RBS score
             expression_compare_data = _get_expression_comparison_data(
                     next_f, seq_record.seq, mod_seq_record.seq)
-            data_obj['RBS_' + codon] = float("{0:.2f}".format(
-                    expression_compare_data['positive_ratio']))
+            data_obj['RBS_' + codon] = float("{0:.4f}".format(
+                    expression_compare_data['delta_expression']))
 
             # Compute mRNA free energy change.
             ss_score = ss_scorer.score_at_codon_start_index(
                     next_f.location.end, seq_record.seq,
-                    mod_seq_record.seq, next_f)
-            data_obj['mRNA_' + codon] = float("{0:.2f}".format(ss_score))
+                    mod_seq_record.seq, next_f, raw_ratio=True)
+            data_obj['mRNA_' + codon] = float("{0:.4f}".format(ss_score))
 
         data_list.append(data_obj)
 
@@ -964,11 +950,11 @@ def _analyze_agr_replacement(g, original_seq_record):
 def main():
     original_seq_record = _get_original_genome_record()
 
-    generate_alternate_codon_choice_comparison_first_30_nt(
-            original_seq_record, CODON_COMPARISON_FIRST_30_NT)
+    # generate_alternate_codon_choice_comparison_first_30_nt(
+    #         original_seq_record, CODON_COMPARISON_FIRST_30_NT)
 
-    # generate_alternate_codon_choice_comparison_rbs_of_downstream(
-    #         original_seq_record, CODON_COMPARISON_RBS_OF_DOWNSTREAM)
+    generate_alternate_codon_choice_comparison_rbs_of_downstream(
+            original_seq_record, CODON_COMPARISON_RBS_OF_DOWNSTREAM)
 
     # _analyze_agr_in_first_30_nt(SS_ONLY)
     # _analyze_agr_in_rbs_of_downstream(SS_ONLY)
