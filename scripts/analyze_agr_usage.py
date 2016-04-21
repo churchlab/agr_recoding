@@ -22,17 +22,17 @@ from getk.scorer import PreserveRBSScorer
 from getk.tool_wrappers.rbs_calc_util import calc_internal_rbs_expression
 from getk.tool_wrappers.rbs_calc_util import calc_rbs_score_for_feature
 from getk.tool_wrappers.rbs_calc_util import UNKNOWN_RBS_CALC_RESULT
-from replace_agr_2015_01_04 import _build_refactor_context
-from replace_agr_2015_01_04 import _check_recoding
-from replace_agr_2015_01_04 import _get_original_genome_record
-from replace_agr_2015_01_04 import MIX_NON_SYNONYMOUS_RBS_SS_0_65
-from replace_agr_2015_01_04 import MIX_RBS_SS_0_2
-from replace_agr_2015_01_04 import MIX_RBS_SS_0_5
-from replace_agr_2015_01_04 import MIX_RBS_SS_0_65
-from replace_agr_2015_01_04 import MIX_RBS_SS_0_8
-from replace_agr_2015_01_04 import RBS_ONLY
-from replace_agr_2015_01_04 import SS_ONLY
-from replace_agr_2015_01_04 import TEST_RECODING__NO_CONSERVATION_SINGLE_RULE_DIR
+from replace_agr import _build_refactor_context
+from replace_agr import _check_recoding
+from replace_agr import _get_original_genome_record
+from replace_agr import MIX_NON_SYNONYMOUS_RBS_SS_0_65
+from replace_agr import MIX_RBS_SS_0_2
+from replace_agr import MIX_RBS_SS_0_5
+from replace_agr import MIX_RBS_SS_0_65
+from replace_agr import MIX_RBS_SS_0_8
+from replace_agr import RBS_ONLY
+from replace_agr import SS_ONLY
+from replace_agr import TEST_RECODING__NO_CONSERVATION_SINGLE_RULE_DIR
 
 
 PWD = os.path.dirname(os.path.realpath(__file__))
@@ -473,17 +473,22 @@ def _calculate_scores_for_alt_codon(
     """
     data_dict = {}
 
+    BUFFER_CUT = 100
+
     orig_seq = str(seq_record.seq[
-            feature.location.start - 100:feature.location.end + 100])
+            feature.location.start - BUFFER_CUT:
+            feature.location.end + BUFFER_CUT])
 
     # Determine codon start position relative to truncated seq.
     if feature.strand == 1:
-        codon_start_idx = agr_start_pos + 100
+        codon_start_idx = agr_start_pos + BUFFER_CUT
         assert orig_seq[codon_start_idx:codon_start_idx + 3] in ['AGG', 'AGA']
+        start_codon_idx = BUFFER_CUT
     else:
-        codon_start_idx = len(feature) - agr_start_pos + 100
+        codon_start_idx = len(feature) - agr_start_pos + BUFFER_CUT
         is_correct = (reverse_complement(orig_seq[
                 codon_start_idx-3:codon_start_idx]) in ['AGG', 'AGA'])
+        start_codon_idx = len(orig_seq) - BUFFER_CUT
         assert is_correct
 
     # Update the sequence.
@@ -508,8 +513,8 @@ def _calculate_scores_for_alt_codon(
 
     # Calculate mRNA score.
     ss_score = ss_scorer.score_at_codon_start_index(
-            codon_start_idx, orig_seq, new_seq, feature)
-    ss_score = float("{0:.2f}".format(ss_score))
+            start_codon_idx, orig_seq, new_seq, feature, raw_ratio=True)
+    ss_score = float("{0:.4f}".format(ss_score))
     data_dict['mRNA_' + codon] = ss_score
 
     # Calculate RBS score.
@@ -521,10 +526,12 @@ def _calculate_scores_for_alt_codon(
         polarity_adjust_orig_seq = reverse_complement(orig_seq)
         polarity_adjusted_new_seq = reverse_complement(new_seq)
         polarity_adjusted_codon_start_idx = len(orig_seq) - codon_start_idx
-    rbs_score = rbs_scorer.score_at_codon_start_index(
+    rbs_score_metadata = rbs_scorer.score_at_codon_start_index(
             polarity_adjusted_codon_start_idx, polarity_adjust_orig_seq,
-            polarity_adjusted_new_seq, feature)
-    rbs_score = float("{0:.2f}".format(rbs_score))
+            polarity_adjusted_new_seq, feature, result_with_metadata=True,
+            buffer_after_AGR_interval_list=[12, 13])
+    rbs_score = rbs_score_metadata['RBS_delta']
+    rbs_score = float("{0:.4f}".format(rbs_score))
     data_dict['RBS_' + codon] = rbs_score
 
     return data_dict
@@ -957,8 +964,8 @@ def _analyze_agr_replacement(g, original_seq_record):
 def main():
     original_seq_record = _get_original_genome_record()
 
-    # generate_alternate_codon_choice_comparison_first_30_nt(
-    #         original_seq_record, CODON_COMPARISON_FIRST_30_NT)
+    generate_alternate_codon_choice_comparison_first_30_nt(
+            original_seq_record, CODON_COMPARISON_FIRST_30_NT)
 
     # generate_alternate_codon_choice_comparison_rbs_of_downstream(
     #         original_seq_record, CODON_COMPARISON_RBS_OF_DOWNSTREAM)
@@ -986,8 +993,8 @@ def main():
     #         MIX_NON_SYNONYMOUS_RBS_SS_0_65, original_seq_record)
 
     # Analyze final AGR usage.
-    _analyze_agr_replacement(
-            MIX_RBS_SS_0_65, original_seq_record)
+    # _analyze_agr_replacement(
+    #         MIX_RBS_SS_0_65, original_seq_record)
 
 
 
