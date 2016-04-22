@@ -330,7 +330,7 @@ def _get_agr_pos_in_first_30_nt(feature, seq_record):
     for bp in range(0, 30, 3):
         codon = f_seq[bp:bp + 3]
         if codon in AGR_CODONS:
-            agr_pos_list.append(bp)
+            agr_pos_list.append((bp, codon))
     return agr_pos_list
 
 
@@ -424,11 +424,12 @@ def generate_alternate_codon_choice_comparison_first_30_nt(
         # AGR in first 30 bp.
         agr_bp_list = _get_agr_pos_in_first_30_nt(f, seq_record)
         if agr_bp_list:
-            for agr_pos in agr_bp_list:
+            for agr_pos, wt_codon in agr_bp_list:
                 data_obj = {
                     'gene': gene,
                     'strand': f.location.strand,
                     'AGR_pos': agr_pos + 1,
+                    'wt_codon': wt_codon,
                     'type': 'AGR in first 30'
                 }
 
@@ -444,6 +445,7 @@ def generate_alternate_codon_choice_comparison_first_30_nt(
         'gene',
         'strand',
         'AGR_pos',
+        'wt_codon',
         'type'
     ]
     for codon in sorted(NON_AGR_SYN_CODONS):
@@ -950,11 +952,11 @@ def _analyze_agr_replacement(g, original_seq_record):
 def main():
     original_seq_record = _get_original_genome_record()
 
-    # generate_alternate_codon_choice_comparison_first_30_nt(
-    #         original_seq_record, CODON_COMPARISON_FIRST_30_NT)
+    generate_alternate_codon_choice_comparison_first_30_nt(
+            original_seq_record, CODON_COMPARISON_FIRST_30_NT)
 
-    generate_alternate_codon_choice_comparison_rbs_of_downstream(
-            original_seq_record, CODON_COMPARISON_RBS_OF_DOWNSTREAM)
+    # generate_alternate_codon_choice_comparison_rbs_of_downstream(
+    #         original_seq_record, CODON_COMPARISON_RBS_OF_DOWNSTREAM)
 
     # _analyze_agr_in_first_30_nt(SS_ONLY)
     # _analyze_agr_in_rbs_of_downstream(SS_ONLY)
