@@ -71,6 +71,12 @@ CODON_COMPARISON_FIRST_30_NT = os.path.join(PWD,
 CODON_COMPARISON_RBS_OF_DOWNSTREAM = os.path.join(PWD,
         '../data/analysis/codon_comparison_AGR_in_RBS_of_downstream.csv')
 
+CODON_COMPARISON_REMAINING = os.path.join(PWD,
+        '../data/analysis/codon_comparison_remaining.csv')
+
+CODON_COMPARISON_REMAINING_DEDUPED = os.path.join(PWD,
+        '../data/analysis/codon_comparison_remaining_deduped.csv')
+
 
 def _get_mg1655_gene_to_function_map():
     """The new mg1655 has awesome function annotations.
@@ -334,6 +340,21 @@ def _get_agr_pos_in_first_30_nt(feature, seq_record):
     return agr_pos_list
 
 
+def _get_all_agr_pos(feature, seq_record):
+    agr_pos_list = []
+    f_seq = str(feature.extract(seq_record).seq).upper()
+    bp = 0
+    while bp < len(feature):
+        # HACK: Support for prfB frame shift.
+        if get_feature_gene_name(feature) == 'prfB' and bp == 75:
+            bp += 1
+        codon = f_seq[bp:bp + 3]
+        if codon in AGR_CODONS:
+            agr_pos_list.append((bp, codon))
+        bp += 3
+    return agr_pos_list
+
+
 def analyze_genes_with_AGR_in_first_30_nt(orig_seq_record, recoded_seq_record,
         output_report, force_fake_ATG=False):
     """Analyze genes with AGR in first 30 nt, as these might be significant
@@ -402,8 +423,11 @@ def analyze_genes_with_AGR_in_first_30_nt(orig_seq_record, recoded_seq_record,
 
 
 def generate_alternate_codon_choice_comparison_first_30_nt(
-        seq_record, output_report):
+        seq_record, output_report, all_codons=False):
     """Generates scores for codon comparisons.
+
+    Args:
+        all_codons: If True, do more than just first 30nt.
     """
     data_list = []
 
@@ -419,18 +443,28 @@ def generate_alternate_codon_choice_comparison_first_30_nt(
     for idx, f in enumerate(coding_features):
         if idx % 100 == 0:
             print "Analyzing feature %d of %d" % (idx, total_coding_features)
+
         gene = get_feature_gene_name(f)
 
+        if all_codons:
+            find_AGR_fn = _get_all_agr_pos
+        else:
+            find_AGR_fn = _get_agr_pos_in_first_30_nt
+
         # AGR in first 30 bp.
-        agr_bp_list = _get_agr_pos_in_first_30_nt(f, seq_record)
+        agr_bp_list = find_AGR_fn(f, seq_record)
         if agr_bp_list:
             for agr_pos, wt_codon in agr_bp_list:
+                if agr_pos <= 30:
+                    category = 'AGR in first 30'
+                else:
+                    category = 'remaining AGR'
                 data_obj = {
                     'gene': gene,
                     'strand': f.location.strand,
                     'AGR_pos': agr_pos + 1,
                     'wt_codon': wt_codon,
-                    'type': 'AGR in first 30'
+                    'type': category
                 }
 
                 data_obj.update(
@@ -485,13 +519,25 @@ def _calculate_scores_for_alt_codon(
     if feature.strand == 1:
         codon_start_idx = agr_start_pos + BUFFER_CUT
         assert orig_seq[codon_start_idx:codon_start_idx + 3] in ['AGG', 'AGA']
-        start_codon_idx = BUFFER_CUT
+
+        if agr_start_pos <= 30:
+            start_codon_idx = BUFFER_CUT
+        else:
+            start_codon_idx = codon_start_idx
     else:
         codon_start_idx = len(feature) - agr_start_pos + BUFFER_CUT
+
+        # HACK: prfB
+        if get_feature_gene_name(feature) == 'prfB' and agr_start_pos < 75:
+            codon_start_idx += 1
+
         is_correct = (reverse_complement(orig_seq[
                 codon_start_idx-3:codon_start_idx]) in ['AGG', 'AGA'])
-        start_codon_idx = len(orig_seq) - BUFFER_CUT
         assert is_correct
+        if agr_start_pos <= 30:
+            start_codon_idx = len(orig_seq) - BUFFER_CUT
+        else:
+            start_codon_idx = codon_start_idx
 
     # Update the sequence.
     swap_codon = codon
@@ -949,14 +995,40 @@ def _analyze_agr_replacement(g, original_seq_record):
     df.to_csv(output_report, index=False)
 
 
-def main():
-    original_seq_record = _get_original_genome_record()
+def remove_duplicates_from_codon_comparison_remaining():
+    """The code to put together the codon comparison scores for codons that are
+    neither in the first 30 nt nor in RBS of a downstream gene includes
+    elements from other categories that may not be scored appropriately.
+    Remove these.
+    """
+    other_df = pd.read_csv(CODON_COMPARISON_REMAINING)
 
-    generate_alternate_codon_choice_comparison_first_30_nt(
-            original_seq_record, CODON_COMPARISON_FIRST_30_NT)
+    first_30_nt_df = pd.read_csv(CODON_COMPARISON_FIRST_30_NT)
+    rbs_in_downstream_df = pd.read_csv(CODON_COMPARISON_RBS_OF_DOWNSTREAM)
+    remove_dup_keys = (set(
+        [tuple(x) for x in first_30_nt_df[['gene', 'AGR_pos']].values] +
+        [tuple(x) for x in rbs_in_downstream_df[['gene', 'AGR_pos']].values]))
+
+    def _is_not_dup(row):
+        return not (row['gene'], row['AGR_pos']) in remove_dup_keys
+    other_df = other_df[other_df.apply(_is_not_dup, axis=1)]
+
+    other_df.to_csv(CODON_COMPARISON_REMAINING_DEDUPED, index=False)
+
+
+def main():
+    # original_seq_record = _get_original_genome_record()
+
+    # generate_alternate_codon_choice_comparison_first_30_nt(
+    #         original_seq_record, CODON_COMPARISON_FIRST_30_NT)
 
     # generate_alternate_codon_choice_comparison_rbs_of_downstream(
     #         original_seq_record, CODON_COMPARISON_RBS_OF_DOWNSTREAM)
+
+    # generate_alternate_codon_choice_comparison_first_30_nt(
+    #         original_seq_record, CODON_COMPARISON_REMAINING, all_codons=True)
+
+    remove_duplicates_from_codon_comparison_remaining()
 
     # _analyze_agr_in_first_30_nt(SS_ONLY)
     # _analyze_agr_in_rbs_of_downstream(SS_ONLY)
