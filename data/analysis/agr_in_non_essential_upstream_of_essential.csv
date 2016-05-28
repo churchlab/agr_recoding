@@ -1,0 +1,5 @@
+upstream_gene_name,upstream_gene_strand,upstream_AGR_start_pos,upstream_gene_function,downstream_gene_name,downstream_gene_strand,downstream_gene_function,expression_original,expression_recoded,delta_expression
+mraW,1,928,,ftsL,1,phenotype; Cell division,1064.72176631,1645.0330998,1.5450356627
+yidD,1,247,membrane; Inner membrane,yidC,1,membrane; Inner membrane,1345.46128231,0.282139178042,0.000209696987756
+rffT,1,1066,,wzyE,1,"enzyme; Central intermediary metabolism: Sugar-nucleotide biosynthesis, conversions",66.7758760959,284.388217261,4.2588466657
+dnaT,-1,532,"factor; DNA - replication, repair, restriction/modification",dnaC,-1,"putative enzyme; DNA - replication, repair, restriction/modification",2829.81478499,2357.95922336,0.833255673082

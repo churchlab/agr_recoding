@@ -1,0 +1,85 @@
+upstream_gene_name,upstream_gene_strand,upstream_AGR_start_pos,upstream_gene_function,downstream_gene_name,downstream_gene_strand,downstream_gene_function,expression_original,expression_recoded,delta_expression
+ilvI,1,1717,"enzyme; Amino acid biosynthesis: Isoleucine, Valine",ilvH,1,"enzyme; Amino acid biosynthesis: Isoleucine, Valine",2671.407539706023,757.6600243331609,0.2836182847700348
+mraW,1,928,,ftsL,1,phenotype; Cell division,1064.721766310015,1645.0330998000447,1.5450356626982495
+ftsI,1,1759,enzyme; Cell division,murE,1,"enzyme; Murein sacculus, peptidoglycan",1643.6459804401204,1643.6459804401204,1.0
+ykfJ,1,247,,prfH,1,,8.426220799124282,8.05540961228237,0.9559931794238705
+mhpB,1,931,enzyme; Degradation of small molecules: Carbon compounds,mhpC,1,enzyme; Degradation of small molecules: Carbon compounds,1734.2278959682394,514.5002619697317,0.29667396261232454
+ybbV,1,148,,ybbW,1,"putative transport; Transport of small molecules: Carbohydrates, organic acids, alcohols",75425.32121181871,1039.6260981489406,0.013783515687382147
+fes,1,1117,enzyme; Transport of small molecules: Cations,ybdZ,1,"Enzyme; Biosynthesis of cofactors, carriers: Enterochelin",9515.63298052419,699.5451064731061,0.0735153518325977
+yliC,1,910,,yliD,1,,301.97456111816837,5.682242112676947,0.018816956274847862
+ybjC,1,259,,nfsA,1,phenotype; Not classified,7049.118204601686,15.791193536615555,0.0022401658020583365
+ycbS,1,2596,,ycbT,1,,538.1840300155642,538.1840300155642,1.0
+ymcE,1,202,phenotype; Not classified,gnsA,1,,29131.04435420124,12958.130302420032,0.4448220305754753
+yciV,1,871,putative enzyme; Not classified,yciO,1,,13070.584897918405,2171.861860403826,0.1661640911532362
+pspB,1,214,"IS, phage, Tn; Phage-related functions and prophages",pspC,1,factor; Phage-related functions and prophages,23760.488256305252,62.50116917499464,0.002630466533380638
+ycjO,1,850,putative transport; Not classified,ycjP,1,putative transport; Not classified,209.16136919231636,20.957068592423557,0.10019569423048807
+ydcT,1,1009,putative transport; Not classified,ydcU,1,putative transport; Not classified,958.5883936577627,876.0759412953756,0.913922959104963
+ydiN,1,1258,putative transport; Not classified,ydiB,1,putative enzyme; Not classified,103355.50464512865,9096.880227281963,0.08801544009209883
+ydjZ,1,697,,ynjA,1,,1333.405258655157,30.20213254904578,0.02265037756001276
+ynjC,1,1474,putative transport; Not classified,ynjD,1,putative transport; Not classified,960.8886474283116,0.010966835190157287,1.141322172918635e-05
+hisF,1,766,enzyme; Amino acid biosynthesis: Histidine,hisI,1,enzyme; Amino acid biosynthesis: Histidine,13746.294794641755,8378.92658131924,0.6095407312656577
+mdtD,1,1402,putative transport; Not classified,baeS,1,"enzyme; RNA synthesis, modification, DNA transcription",668.7603504876347,4.693020253454531,0.007017491766718165
+baeS,1,1393,"enzyme; RNA synthesis, modification, DNA transcription",baeR,1,"regulator; RNA synthesis, modification, DNA transcription",5800.165885404323,918.6029931272946,0.1583752967202006
+ygbL,1,631,putative enzyme; Not classified,ygbM,1,,9168.088511010854,36.81599281284602,0.004015667253717075
+ygcN,1,1252,putative enzyme; Not classified,ygcO,1,,446.0295794263935,0.012108233029170919,2.7146704137296105e-05
+yraM,1,1984,,yraN,1,,800.665916669334,0.5165959156375297,0.0006452078262385658
+yrbK,1,535,,yhbN,1,,1175.535059493062,153.7419076865104,0.1307846213900333
+frlC,1,826,,frlD,1,putative enzyme; Not classified,514.5002619697315,514.5002619697315,1.0
+bcsF,1,175,,bcsG,1,,71.66474640383156,20.034814635075175,0.2795630437618351
+xylG,1,1507,transport; Sugar metabolism,xylH,1,putative transport; Not classified,4078.167747963539,1.2593488533398627,0.00030880261214579196
+lldR,1,760,"regulator; Energy metabolism, carbon: Aerobic respiration",lldD,1,"enzyme; Energy metabolism, carbon: Aerobic respiration",23590.01015076769,239.39611305481608,0.010148198814871022
+envC,1,1255,"enzyme; Murein sacculus, peptidoglycan",yibQ,1,,381.85511210129516,367.02768771347115,0.9611700251798888
+yidD,1,247,membrane; Inner membrane,yidC,1,membrane; Inner membrane,1345.4612823056564,0.282139178042081,0.00020969698775619302
+rbsK,1,925,enzyme; Degradation of small molecules: Carbon compounds,rbsR,1,regulator; Degradation of small molecules: Carbon compounds,75.55638757264875,12.457246018462145,0.16487349936475315
+rffC,1,541,,rffA,1,,67.89711496522031,22.875998070379417,0.33692150369124585
+wzxE,1,1240,putative carrier; Not classified,rffT,1,,10.40099083520683,0.9154477857546168,0.08801544009209894
+rffT,1,1066,,wzyE,1,"enzyme; Central intermediary metabolism: Sugar-nucleotide biosynthesis, conversions",66.77587609594022,284.3882172606313,4.258846665703593
+secE,1,376,"transport; Protein, peptide secretion",nusG,1,"putative factor; RNA synthesis, modification, DNA transcription",737.474910554198,70.64006698764129,0.09578640029198641
+nrfF,1,370,"enzyme; Energy metabolism, carbon: Anaerobic respiration",nrfG,1,"enzyme; Energy metabolism, carbon: Anaerobic respiration",542.0733286331255,302.518659279421,0.5580770041614891
+creB,1,679,regulator; Global regulatory functions,creC,1,enzyme; Global regulatory functions,198.40378321717338,0.08295332299929276,0.00041810353438921974
+dnaT,-1,532,"factor; DNA - replication, repair, restriction/modification",dnaC,-1,"putative enzyme; DNA - replication, repair, restriction/modification",2829.8147849888055,2357.9592233620774,0.8332556730815883
+pyrL,-1,130,leader; Pyrimidine ribonucleotide biosynthesis,pyrB,-1,enzyme; Pyrimidine ribonucleotide biosynthesis,11945.507627138224,145.92168181358878,0.012215611623073998
+dcuS,-1,1627,putative regulator; Not classified,dcuR,-1,putative regulator; Not classified,812.764816434137,183.5281353022309,0.22580718504453529
+eptA,-1,1630,,basR,-1,"regulator; RNA synthesis, modification, DNA transcription",357.00847492837767,115.61321402766363,0.32383885018656133
+phnM,-1,1126,enzyme; Central intermediary metabolism: Phosphorus compounds,phnN,-1,transport; Central intermediary metabolism: Phosphorus compounds,372.5485144988838,23.26351918771554,0.062444267745926665
+glnL,-1,1042,enzyme; Amino acid biosynthesis: Glutamine,glnG,-1,regulator; Amino acid biosynthesis: Glutamine,3868.4194548672394,189.67266352751017,0.049031048918147774
+dnaN,-1,1093,"enzyme; DNA - replication, repair, restriction/modification",recF,-1,"regulator; DNA - replication, repair, restriction/modification",1645.0330998000434,1507.041196771044,0.9161160325310339
+dgoR,-1,670,,dgoK,-1,enzyme; Degradation of small molecules: Carbon compounds,2135.996184257807,2798.154624990113,1.3099998237882555
+dgoK,-1,850,enzyme; Degradation of small molecules: Carbon compounds,dgoA,-1,enzyme; Degradation of small molecules: Carbon compounds,2845.1386544214465,30.75074852628876,0.010808172205773172
+yidG,-1,352,,yidF,-1,putative enzyme; Not classified,693.3784142256013,218.78960404128352,0.3155414122397196
+rfaQ,-1,1018,,rfaG,-1,,3926.87532048889,145.13575006434766,0.036959602284056856
+rfaB,-1,1102,,rfaI,-1,,731.7469638169249,101.0117408932759,0.1380418995746567
+dppD,-1,970,transport; Not classified,dppF,-1,transport; Not classified,65.37825846483648,28.648776693786072,0.4382003645630105
+yhiI,-1,1054,putative membrane; Not classified,rbbA,-1,putative transport; Not classified,78.27339525410572,3.2696737649516012,0.04177247906950983
+yrfC,-1,511,,yrfB,-1,,2076.2851251968955,0.15520405304168527,7.47508380030258e-05
+yhfG,-1,148,,fic,-1,,5.618666478118899,0.5973355311438295,0.10631268708866563
+yheN,-1,370,,yheM,-1,,1863.710696237513,50.90518278775907,0.027313886694178023
+yheM,-1,352,,yheL,-1,,3698.182614003691,3231.1173694416493,0.8737041154232262
+smf,-1,1087,,smg,-1,,3406.3107167353237,0.010655464461894448,3.1281539906338484e-06
+yhdE,-1,574,,rng,-1,structural component; Cell division,10031.576972296978,289.20577491958045,0.02882954252539216
+hybE,-1,469,"phenotype; Energy metabolism, carbon: Anaerobic respiration",hybF,-1,"regulator; Energy metabolism, carbon: Anaerobic respiration",6.4880513351236395,2.216327019500138,0.3416013383713313
+yggH,-1,709,,yggL,-1,,2288.256148778591,224.77800173186887,0.09823113634015547
+pepP,-1,1315,"enzyme; Degradation of proteins, peptides, glyco",ubiH,-1,"enzyme; Biosynthesis of cofactors, carriers: Menaquinone, ubiquinone",28.648776693786093,0.8977720910381655,0.03133718764448647
+ygdB,-1,385,,ppdC,-1,putative structural component; Surface structures,2705.2836334821272,174.70311606544342,0.06457848408322825
+ygcR,-1,766,putative transport; Not classified,ygcQ,-1,putative enzyme; Not classified,13639.527712410572,1.1102466557890303,8.139920085200748e-05
+hycH,-1,397,"factor; Energy metabolism, carbon: Fermentation",hycI,-1,"enzyme; Degradation of proteins, peptides, glyco",60.50294333643174,9.219837093682806,0.15238658791218007
+yfjG,-1,472,,yfjF,-1,,910.6996644834335,1090.325078546302,1.1972389153835425
+yfhM,-1,4954,,pbpC,-1,"enzyme; Murein sacculus, peptidoglycan",8.053689890304424,88.94520864016953,11.044031971885058
+folC,-1,1252,"enzyme; Biosynthesis of cofactors, carriers: Folic acid",dedD,-1,putative membrane; Not classified,1502.1657981648116,0.33068834168919964,0.00022014104041857425
+hisQ,-1,673,"transport; Transport of small molecules: Amino acids, amines",hisM,-1,"transport; Transport of small molecules: Amino acids, amines",1655.5241293314964,16.5902077396419,0.010021121073204204
+nuoJ,-1,532,"enzyme; Energy metabolism, carbon: Aerobic respiration",nuoK,-1,"enzyme; Energy metabolism, carbon: Aerobic respiration",30902.909140668853,24675.918885722793,0.7984982505497771
+ada,-1,1060,"enzyme; DNA - replication, repair, restriction/modification",alkB,-1,"putative enzyme; DNA - replication, repair, restriction/modification",24268.425880989882,22179.471593973696,0.9139229591049611
+ccmA,-1,613,"transport; Protein, peptide secretion",ccmB,-1,"transport; Protein, peptide secretion",1503.4335183948633,23.98645974360772,0.015954453223323634
+ccmC,-1,724,"transport; Protein, peptide secretion",ccmD,-1,"transport; Protein, peptide secretion",2065.1022880743526,878.1781960280466,0.42524682728763136
+yehU,-1,1672,putative regulator; Not classified,yehT,-1,,6442.35096863022,5.73418494957861,0.0008900764608293018
+otsB,-1,763,enzyme; Osmotic adaptation,otsA,-1,enzyme; Osmotic adaptation,2171.861860403825,59.3219887704768,0.027313886694178037
+pheT,-1,2380,"enzyme; Aminoacyl tRNA synthetases, tRNA modification",ihfA,-1,"factor; DNA - replication, repair, restriction/modification",878.1781960280466,227.08349395958402,0.2585847553340206
+sufD,-1,1267,,sufS,-1,,9118.709338902197,820.6672727623265,0.08999818310483913
+ymfA,-1,439,,ycfZ,-1,putative factor; Not classified,620.4312410392432,1746.7606538765904,2.815397643340312
+csgD,-1,643,putative regulator; Not classified,csgE,-1,structural component; Surface structures,111.39061178772718,0.5231494995568359,0.004696531342818925
+artQ,-1,706,"transport; Transport of small molecules: Amino acids, amines",artM,-1,"transport; Transport of small molecules: Amino acids, amines",20759.636373999125,288.6856207884858,0.013906101994640744
+glnP,-1,643,"transport; Transport of small molecules: Amino acids, amines",glnQ,-1,"transport; Transport of small molecules: Amino acids, amines",145.71168482620038,119.89470440175012,0.8228214816454574
+ybiH,-1,661,putative regulator; Not classified,ybhG,-1,putative membrane; Not classified,5255.297697664464,16.650046115787372,0.003168240330740333
+gltK,-1,664,"transport; Transport of small molecules: Amino acids, amines",gltL,-1,"transport; Transport of small molecules: Amino acids, amines",17867.778899812896,0.019686522050356196,1.1017889890367036e-06
+panE,-1,859,phenotype; Not classified,yajL,-1,,7967.053876747058,8717.423933139266,1.0941841323029415
+caiC,-1,1552,"putative enzyme; Central intermediary metabolism: Pool, multipurpose conversions",caiD,-1,enzyme; Degradation of small molecules: Amines,0.022695086859221145,0.015833254755365636,0.697651207663587

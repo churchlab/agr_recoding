@@ -59,6 +59,9 @@ ARG_CODON_SET = AGR_CODONS | NON_AGR_SYN_CODONS
 DOWNSTREAM_RBS_REPORT_FILE = os.path.join(PWD,
         '../data/analysis/genes_with_agr_in_rbs_of_downstream_rbs.csv')
 
+AGR_IN_NON_ESSENTIAL_UPSTREAM_OF_ESSENTIAL = os.path.join(PWD,
+        '../data/analysis/agr_in_non_essential_upstream_of_essential.csv')
+
 RBS_IN_FIRST_30_NT_REPORT_FILE = os.path.join(PWD,
         '../data/analysis/genes_with_agr_in_first_30_nt.csv')
 
@@ -76,6 +79,10 @@ CODON_COMPARISON_REMAINING = os.path.join(PWD,
 
 CODON_COMPARISON_REMAINING_DEDUPED = os.path.join(PWD,
         '../data/analysis/codon_comparison_remaining_deduped.csv')
+
+# NOTE: From getk_validation. Uses mix of Keio and PEC data.
+KEIO_DATA = os.path.join(PWD,
+    '../data/analysis/essential_genes.csv')
 
 
 def _get_mg1655_gene_to_function_map():
@@ -1016,6 +1023,24 @@ def remove_duplicates_from_codon_comparison_remaining():
     other_df.to_csv(CODON_COMPARISON_REMAINING_DEDUPED, index=False)
 
 
+def find_agr_in_non_essential_upstream_of_essential():
+    agr_df = pd.read_csv(DOWNSTREAM_RBS_REPORT_FILE)
+    keio_df = pd.read_csv(KEIO_DATA)
+
+    essential_gene_set = set(keio_df['gene'])
+    assert len(essential_gene_set) == 299
+
+    def _is_agr_in_non_essential_upstream_of_essential(row):
+        return (row['upstream_gene_name'] not in essential_gene_set and
+                row['downstream_gene_name'] in essential_gene_set)
+
+    agr_passing_filter_df = agr_df[agr_df.apply(
+            _is_agr_in_non_essential_upstream_of_essential, axis=1)]
+
+    agr_passing_filter_df.to_csv(
+            AGR_IN_NON_ESSENTIAL_UPSTREAM_OF_ESSENTIAL, index=False)
+
+
 def main():
     # original_seq_record = _get_original_genome_record()
 
@@ -1028,7 +1053,7 @@ def main():
     # generate_alternate_codon_choice_comparison_first_30_nt(
     #         original_seq_record, CODON_COMPARISON_REMAINING, all_codons=True)
 
-    remove_duplicates_from_codon_comparison_remaining()
+    # remove_duplicates_from_codon_comparison_remaining()
 
     # _analyze_agr_in_first_30_nt(SS_ONLY)
     # _analyze_agr_in_rbs_of_downstream(SS_ONLY)
@@ -1056,6 +1081,7 @@ def main():
     # _analyze_agr_replacement(
     #         MIX_RBS_SS_0_65, original_seq_record)
 
+    find_agr_in_non_essential_upstream_of_essential()
 
 
 if __name__ == '__main__':
